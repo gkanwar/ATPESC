@@ -38,10 +38,17 @@ int fib(int n) {
    int x, y;
    if (n < 2) {
       return (n);
+   } else if (n < 35) {
+     x = fib(n-1);
+     y = fib(n-2);
+     return (x+y);
    } else {
-      x = fib(n - 1);
-      y = fib(n - 2);
-	  return (x + y);
+     #pragma omp task shared(x)
+     x = fib(n - 1);
+     #pragma omp task shared(y)
+     y = fib(n - 2);
+     #pragma omp taskwait
+     return (x + y);
    }
 }
 
@@ -94,7 +101,7 @@ int main(int argc, char *argv[]) {
    {
      #pragma omp single nowait
      while (p != NULL) {
-       #pragma omp task firstprivate(p)
+       /* #pragma omp task firstprivate(p) */
        { processwork(p); }
        p = p->next;
      }
