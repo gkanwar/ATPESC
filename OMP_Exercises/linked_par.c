@@ -90,19 +90,15 @@ int main(int argc, char *argv[]) {
 
    // traverse the list process work for each node
    start = omp_get_wtime();
-   int count = 0;
-   while (p != NULL) {
-     /* processwork(p); */
-     p = p->next;
-     count++;
-   }
-   #pragma omp parallel for shared(head) private(p) schedule(dynamic)
-   for (int i = 0; i < count; i++) {
-     struct node *p = head;
-     for (int j = 0; j < i; j++) {
+   #pragma omp parallel shared(p)
+   {
+     #pragma omp single nowait
+     while (p != NULL) {
+       struct node *p2 = p;
+       #pragma omp task
+       { processwork(p2); }
        p = p->next;
      }
-     processwork(p);
    }
    end = omp_get_wtime();
 
