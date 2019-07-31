@@ -94,9 +94,8 @@ int main(int argc, char *argv[]) {
    {
      #pragma omp single nowait
      while (p != NULL) {
-       struct node *p2 = p;
-       #pragma omp task
-       { processwork(p2); }
+       #pragma omp task firstprivate(p)
+       { processwork(p); }
        p = p->next;
      }
    }
