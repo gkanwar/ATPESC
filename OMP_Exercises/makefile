@@ -8,7 +8,8 @@ include make.def
 
 EXES=hello$(EXE) pi$(EXE) mandel$(EXE)  \
          mm_testbed$(EXE) jac_solv$(EXE) pi_mc$(EXE)   \
-         linked$(EXE) linked_par$(EXE) hist$(EXE) 
+         linked$(EXE) linked_par$(EXE) hist$(EXE) \
+	racey$(EXE)
 
 MM_OBJS  = mm_testbed.$(OBJ) mm_utils.$(OBJ) mm_ijk.$(OBJ) mm_tst_cases.$(OBJ)
 
@@ -46,6 +47,9 @@ pi_mc$(EXE): $(PMC_OBJS) random.h
 
 hist$(EXE): $(HIST_OBJS) random.h
 	$(CLINKER) $(OPTFLAGS) -o hist $(HIST_OBJS) $(LIBS)
+
+racey$(EXE): racey.$(OBJ)
+	$(CLINKER) $(OPTFLAGS) -o racey racey.$(OBJ) $(LIBS)
 
 test: $(EXES)
 	$(PRE)hello$(EXE) 
