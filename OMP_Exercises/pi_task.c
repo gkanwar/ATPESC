@@ -16,7 +16,7 @@
 #include <stdio.h>
 #include <omp.h>
 /* static long num_steps = 1000000000; */
-static int total_depth = 30;
+static int total_depth = 32;
 double step;
 
 double integrate(double start, double end, int depth) {
@@ -24,7 +24,7 @@ double integrate(double start, double end, int depth) {
   if (depth == 0) {
     return (end-start)*4.0/(1.0+x*x);
   }
-  else if (depth < 20) {
+  else if (depth < 25) {
     double s1, s2;
     s1 = integrate(start, x, depth-1);
     s2 = integrate(x, end, depth-1);
