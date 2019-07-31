@@ -6,7 +6,7 @@
 
 include make.def
 
-EXES=hello$(EXE) pi$(EXE) mandel$(EXE)  \
+EXES=hello$(EXE) pi$(EXE) pi_task$(EXE) mandel$(EXE)  \
          mm_testbed$(EXE) jac_solv$(EXE) pi_mc$(EXE)   \
          linked$(EXE) linked_par$(EXE) hist$(EXE) \
 	racey$(EXE)
@@ -39,6 +39,9 @@ hello$(EXE): hello.$(OBJ)
 pi$(EXE): pi.$(OBJ) 
 	$(CLINKER) $(OPTFLAGS) -o pi pi.$(OBJ) $(LIBS)
 
+pi_task$(EXE): pi_task.$(OBJ) 
+	$(CLINKER) $(OPTFLAGS) -o pi_task pi_task.$(OBJ) $(LIBS)
+
 mandel$(EXE):  mandel.$(OBJ) 
 	$(CLINKER) $(OPTFLAGS) -o mandel mandel.$(OBJ) $(LIBS)
 
@@ -53,7 +56,8 @@ racey$(EXE): racey.$(OBJ)
 
 test: $(EXES)
 	$(PRE)hello$(EXE) 
-	$(PRE)pi$(EXE) 
+	$(PRE)pi$(EXE)
+	$(PRE)pi_task$(EXE)
 	$(PRE)pi_mc$(EXE) 
 	$(PRE)mandel$(EXE) 
 	$(PRE)mm_testbed$(EXE) 
